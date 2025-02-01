@@ -166,3 +166,29 @@ function handleFoodKeyPress(event) {
     addFood();
   }
 }
+function saveBillData() {
+  const billData = {
+    names: names,
+    foods: foods,
+    gst: gst,
+    serviceCharge: serviceCharge
+  };
+  localStorage.setItem('billData', JSON.stringify(billData));
+  alert('Bill data saved!');
+}
+
+function loadBillData() {
+  const savedBillData = JSON.parse(localStorage.getItem('billData'));
+  if (savedBillData) {
+    names = savedBillData.names;
+    foods = savedBillData.foods;
+    gst = savedBillData.gst;
+    serviceCharge = savedBillData.serviceCharge;
+    updateTableHeader();
+    updateTableBody();
+    calculateTotal();
+    alert('Bill data loaded!');
+  } else {
+    alert('No saved bill data found.');
+  }
+}
