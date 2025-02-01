@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Bill Splitting App</title>
+        <!-- Materialize CSS -->
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+            rel="stylesheet"
+        />
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body>
+        <div class="background-tint"></div>
+        <div class="container">
+            <!-- Title -->
+            <h1 class="center-align">Bill Splitting App</h1>
+
+            <!-- Insert Name Section -->
+            <div class="row">
+                <div class="input-field col s12 m8 offset-m2">
+                    <input
+                        type="text"
+                        id="nameInput"
+                        placeholder="Enter Name"
+                        onkeypress="handleNameKeyPress(event)"
+                    />
+                    <button
+                        class="btn waves-effect waves-light"
+                        onclick="addName()"
+                    >
+                        Add Name
+                    </button>
+                    <span id="nameError" class="red-text"></span>
+                </div>
+            </div>
+
+            <!-- GST/Service Charge Section -->
+            <div class="row">
+                <div class="col s12 m8 offset-m2">
+                    <p>GST/Service Charge</p>
+                    <label>
+                        <input
+                            type="radio"
+                            name="chargeType"
+                            value="include"
+                            onchange="toggleChargeInputs(true)"
+                        />
+                        <span>Include</span>
+                    </label>
+                    <label>
+                        <input
+                            type="radio"
+                            name="chargeType"
+                            value="exclude"
+                            onchange="toggleChargeInputs(false)"
+                            checked
+                        />
+                        <span>Exclude</span>
+                    </label>
+                </div>
+                <div
+                    class="input-field col s12 m4 offset-m2"
+                    id="gstInputContainer"
+                    style="display: none"
+                >
+                    <input type="number" id="gstInput" placeholder="GST (%)" />
+                </div>
+                <div
+                    class="input-field col s12 m4"
+                    id="serviceChargeInputContainer"
+                    style="display: none"
+                >
+                    <input
+                        type="number"
+                        id="serviceChargeInput"
+                        placeholder="Service Charge (%)"
+                    />
+                </div>
+            </div>
+
+            <!-- Insert Food Section -->
+            <div class="row">
+                <div class="input-field col s12 m4 offset-m2">
+                    <input
+                        type="text"
+                        id="foodInput"
+                        placeholder="Enter Food/Item"
+                        onkeypress="handleFoodKeyPress(event)"
+                    />
+                </div>
+                <div class="input-field col s12 m2">
+                    <input
+                        type="number"
+                        id="priceInput"
+                        placeholder="Price"
+                        onkeypress="handleFoodKeyPress(event)"
+                    />
+                </div>
+                <div class="input-field col s12 m2">
+                    <input
+                        type="number"
+                        id="quantityInput"
+                        placeholder="Qty"
+                        onkeypress="handleFoodKeyPress(event)"
+                    />
+                </div>
+                <div class="col s12 m2">
+                    <button
+                        class="btn waves-effect waves-light"
+                        onclick="addFood()"
+                    >
+                        Add Food
+                    </button>
+                </div>
+                <span
+                    id="foodError"
+                    class="red-text col s12 m8 offset-m2"
+                ></span>
+            </div>
+
+            <!-- Table for Names and Food Items -->
+            <div class="row">
+                <div class="col s12 m8 offset-m2 table-container">
+                    <table id="billTable" class="highlight">
+                        <thead>
+                            <tr>
+                                <th>Item/Name</th>
+                                <!-- Names will be dynamically added here -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Food items and checkboxes will be dynamically added here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Total Section -->
+            <div class="row">
+                <div class="col s12 m8 offset-m2 center-align">
+                    <div
+                        id="totalSection"
+                        class="card-panel teal lighten-2 white-text"
+                    ></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Confirmation Modal -->
+        <div id="confirmationModal" class="modal">
+            <div class="modal-content">
+                <h4>Confirm Removal</h4>
+                <p id="modalMessage"></p>
+            </div>
+            <div class="modal-footer">
+                <a
+                    href="#!"
+                    class="modal-close waves-effect waves-green btn-flat"
+                    >Cancel</a
+                >
+                <a
+                    href="#!"
+                    class="modal-close waves-effect waves-red btn-flat"
+                    id="confirmRemove"
+                    >Remove</a
+                >
+            </div>
+        </div>
+
+        <!-- Materialize JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <!-- Custom JavaScript -->
+        <script src="index.js"></script>
+    </body>
+</html>
