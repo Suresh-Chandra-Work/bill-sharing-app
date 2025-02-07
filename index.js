@@ -91,6 +91,9 @@ function updatePayer(foodIndex, payerIndex) {
 function toggleChargeInputs(show) {
   document.getElementById('gstInputContainer').style.display = show ? 'block' : 'none';
   document.getElementById('serviceChargeInputContainer').style.display = show ? 'block' : 'none';
+  document.getElementById('gstInput').value = show ? gst : '';
+  document.getElementById('serviceChargeInput').value = show ? serviceCharge : '';
+
   calculateTotal();
 }
 
@@ -167,23 +170,35 @@ function handleFoodKeyPress(event) {
   }
 }
 function saveBillData() {
+  const chargeType = document.querySelector('input[name="chargeType"]:checked').value;
+
   const billData = {
     names: names,
     foods: foods,
     gst: gst,
-    serviceCharge: serviceCharge
+    serviceCharge: serviceCharge,
+    chargeType: chargeType // Save selected option
   };
+
   localStorage.setItem('billData', JSON.stringify(billData));
   alert('Bill data saved!');
 }
-
 function loadBillData() {
   const savedBillData = JSON.parse(localStorage.getItem('billData'));
+
   if (savedBillData) {
     names = savedBillData.names;
     foods = savedBillData.foods;
     gst = savedBillData.gst;
     serviceCharge = savedBillData.serviceCharge;
+
+    // Restore GST/Service Charge selection
+    if (savedBillData.chargeType) {
+      document.querySelector(`input[name="chargeType"][value="${savedBillData.chargeType}"]`).checked = true;
+      toggleChargeInputs(savedBillData.chargeType === "include");
+
+    }
+
     updateTableHeader();
     updateTableBody();
     calculateTotal();
